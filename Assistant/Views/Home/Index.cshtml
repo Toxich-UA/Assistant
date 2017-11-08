@@ -1,0 +1,18 @@
+﻿@model IQueryable<Orders>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <!-- Cards START -->
+        <div class="col-sm-6 my-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">@item.Customer</h4>
+                    <p class="card-text">@item.Description</p>
+                    <a href="order?orderId=@item.Id" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    <!-- Cards END -->
+    }
+</div> 

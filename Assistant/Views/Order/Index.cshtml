@@ -1,0 +1,41 @@
+﻿@model IQueryable<OrderGoods>
+
+    
+@foreach (var item in Model)
+{
+    
+    <dl>
+        <dt><b>Order ID:</b></dt>
+        <dd>@item.OrderId</dd>
+    </dl>
+    <dl>
+        <dt><b>Goods ID:</b></dt>
+        <dd>@item.GoodsId</dd>
+    </dl>
+    <dl>
+        <dt><b>Customer:</b></dt>
+        <dd>@item.Order.Customer</dd>
+    </dl>
+    <dl>
+        <dt><b>Description:</b></dt>
+        <dd>@item.Order.Description</dd>
+    </dl>
+    <dl>
+        <dt><b>Product Code:</b></dt>
+        <dd>@item.Goods.ProductCode</dd>
+    </dl>  
+    <dl>
+        <dt><b>Full Name:</b></dt>
+        <dd>@item.Goods.FullName</dd>
+    </dl>
+    <dl>
+        <dt><b>Price:</b></dt>
+        <dd>@item.Goods.Price</dd>
+    </dl>
+    <dl>
+        <dt><b>Retail Price:</b></dt>
+        <dd>@item.Goods.RetailPrice</dd>
+    </dl>
+    <hr/>
+
+}
