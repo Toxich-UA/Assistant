@@ -11,7 +11,7 @@ using System;
 namespace Assistant.Migrations
 {
     [DbContext(typeof(AssistantContext))]
-    [Migration("20171108141624_Initial]")]
+    [Migration("20171111214353_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,23 @@ namespace Assistant.Migrations
             modelBuilder
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
+
+            modelBuilder.Entity("Assistant.Models.Formats", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int(11)")
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Format")
+                        .HasColumnName("format")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Formats");
+                });
 
             modelBuilder.Entity("Assistant.Models.Goods", b =>
                 {
@@ -42,7 +59,7 @@ namespace Assistant.Migrations
 
                     b.HasKey("ProductCode");
 
-                    b.ToTable("goods");
+                    b.ToTable("Goods");
                 });
 
             modelBuilder.Entity("Assistant.Models.OrderGoods", b =>
@@ -52,6 +69,14 @@ namespace Assistant.Migrations
                         .HasColumnName("id")
                         .HasColumnType("int(11)")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Count")
+                        .HasColumnName("count")
+                        .HasColumnType("int(11)");
+
+                    b.Property<int>("FormatId")
+                        .HasColumnName("formatId")
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("GoodsId")
                         .HasColumnName("goodsId")
@@ -63,13 +88,16 @@ namespace Assistant.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FormatId")
+                        .HasName("formatType_idx");
+
                     b.HasIndex("GoodsId")
                         .HasName("goodsId_idx");
 
                     b.HasIndex("OrderId")
                         .HasName("orderId_idx");
 
-                    b.ToTable("Order-Goods");
+                    b.ToTable("OrderGoods");
                 });
 
             modelBuilder.Entity("Assistant.Models.Orders", b =>
@@ -103,12 +131,18 @@ namespace Assistant.Migrations
 
             modelBuilder.Entity("Assistant.Models.OrderGoods", b =>
                 {
+                    b.HasOne("Assistant.Models.Formats", "Formats")
+                        .WithMany("OrderGoods")
+                        .HasForeignKey("FormatId")
+                        .HasConstraintName("formats")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Assistant.Models.Goods", "Goods")
                         .WithMany("OrderGoods")
                         .HasForeignKey("GoodsId")
                         .HasConstraintName("goodsId");
 
-                    b.HasOne("Assistant.Models.Orders", "Order")
+                    b.HasOne("Assistant.Models.Orders", "Orders")
                         .WithMany("OrderGoods")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("orderId")

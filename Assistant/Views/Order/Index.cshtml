@@ -1,41 +1,37 @@
 ﻿@model IQueryable<OrderGoods>
 
-    
-@foreach (var item in Model)
-{
-    
-    <dl>
-        <dt><b>Order ID:</b></dt>
-        <dd>@item.OrderId</dd>
-    </dl>
-    <dl>
-        <dt><b>Goods ID:</b></dt>
-        <dd>@item.GoodsId</dd>
-    </dl>
-    <dl>
-        <dt><b>Customer:</b></dt>
-        <dd>@item.Order.Customer</dd>
-    </dl>
-    <dl>
-        <dt><b>Description:</b></dt>
-        <dd>@item.Order.Description</dd>
-    </dl>
-    <dl>
-        <dt><b>Product Code:</b></dt>
-        <dd>@item.Goods.ProductCode</dd>
-    </dl>  
-    <dl>
-        <dt><b>Full Name:</b></dt>
-        <dd>@item.Goods.FullName</dd>
-    </dl>
-    <dl>
-        <dt><b>Price:</b></dt>
-        <dd>@item.Goods.Price</dd>
-    </dl>
-    <dl>
-        <dt><b>Retail Price:</b></dt>
-        <dd>@item.Goods.RetailPrice</dd>
-    </dl>
-    <hr/>
-
+@{
+    ViewData["Title"] = "Orders";
 }
+
+<div class="controls">
+
+</div>
+<div>
+    <table class="table">
+        <thead class="thead-dark">
+            <th scope="col">№</th>
+            <th scope="col">Код</th>
+            <th scope="col">Повна назва товару</th>
+            <th scope="col">Опис</th>
+            <th scope="col">К-ть</th>
+            <th scope="col">Ціна</th>
+            <th scope="col">Сума</th>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var rez = item.Count * item.Goods.Price;
+                <tr>
+                    <th scope="row">#</th>
+                    <td>@item.Goods.ProductCode</td>
+                    <td>@item.Goods.FullName</td>
+                    <td>@item.Orders.Description</td>
+                    <td>@item.Count</td>
+                    <td>@item.Goods.Price</td>
+                    <td>@rez</td>
+                </tr> 
+            }
+        </tbody>
+    </table>
+</div>

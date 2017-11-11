@@ -10,7 +10,20 @@ namespace Assistant.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "goods",
+                name: "Formats",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int(11)", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    format = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Formats", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Goods",
                 columns: table => new
                 {
                     productCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
@@ -21,7 +34,7 @@ namespace Assistant.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_goods", x => x.productCode);
+                    table.PrimaryKey("PK_Goods", x => x.productCode);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,21 +54,29 @@ namespace Assistant.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order-Goods",
+                name: "OrderGoods",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    count = table.Column<int>(type: "int(11)", nullable: false),
+                    formatId = table.Column<int>(type: "int(11)", nullable: false),
                     goodsId = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
                     orderId = table.Column<int>(type: "int(11)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order-Goods", x => x.id);
+                    table.PrimaryKey("PK_OrderGoods", x => x.id);
+                    table.ForeignKey(
+                        name: "formats",
+                        column: x => x.formatId,
+                        principalTable: "Formats",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "goodsId",
                         column: x => x.goodsId,
-                        principalTable: "goods",
+                        principalTable: "Goods",
                         principalColumn: "productCode",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -67,23 +88,31 @@ namespace Assistant.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "formatType_idx",
+                table: "OrderGoods",
+                column: "formatId");
+
+            migrationBuilder.CreateIndex(
                 name: "goodsId_idx",
-                table: "Order-Goods",
+                table: "OrderGoods",
                 column: "goodsId");
 
             migrationBuilder.CreateIndex(
                 name: "orderId_idx",
-                table: "Order-Goods",
+                table: "OrderGoods",
                 column: "orderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Order-Goods");
+                name: "OrderGoods");
 
             migrationBuilder.DropTable(
-                name: "goods");
+                name: "Formats");
+
+            migrationBuilder.DropTable(
+                name: "Goods");
 
             migrationBuilder.DropTable(
                 name: "Orders");

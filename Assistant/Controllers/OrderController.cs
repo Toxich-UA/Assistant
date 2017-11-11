@@ -14,16 +14,12 @@ namespace Assistant.Controllers
 		// GET: /<controller>/
 		public IActionResult Index(int orderId)
 		{
-
-			//var ordersGoods = db.OrderGoods.FromSql("select * from `Order-Goods` inner join Orders on orderId = Orders.id inner join goods on goodsId = goods.productCode where orderId = 1");
 			
-			var ordersGoods = db.OrderGoods.Include(id => id.Goods).Include(id => id.Order).Where(id => id.OrderId == orderId);
-			
-			//var ordersGoods = db.OrderGoods;
-			
-
-
-
+			var ordersGoods = db.OrderGoods.Include(id => id.Goods)
+								.Include(id => id.Orders)
+								.Where(id => id.OrderId == orderId)
+								.OrderBy(id => id.FormatId);
+		
 			return View(ordersGoods);
         }
     }
