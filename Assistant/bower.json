@@ -3,7 +3,12 @@
   "private": true,
   "dependencies": {
     "jquery": "3.2.1",
-    "popper.js": "v1.12.6",
-    "bootstrap": "v4.0.0-beta"
+    "popper.js": "v1.12.7",
+    "bootstrap": "v4.0.0-beta",
+    "jquery-validation": "1.17.0",
+    "jquery-validation-unobtrusive": "v3.2.6"
+  },
+  "resolutions": {
+    "popper.js": "v1.12.7"
   }
 }

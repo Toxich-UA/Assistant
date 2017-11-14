@@ -1,4 +1,4 @@
-﻿@model IQueryable<OrderGoods>
+﻿@model IEnumerable<OrderGoods>
 
 @{
     ViewData["Title"] = "Orders";
@@ -7,31 +7,44 @@
 <div class="controls">
 
 </div>
+<div class="customer">
+
+</div>
 <div>
-    <table class="table">
-        <thead class="thead-dark">
-            <th scope="col">№</th>
-            <th scope="col">Код</th>
-            <th scope="col">Повна назва товару</th>
-            <th scope="col">Опис</th>
-            <th scope="col">К-ть</th>
-            <th scope="col">Ціна</th>
-            <th scope="col">Сума</th>
-        </thead>
+    @{var format = 0;
+        float? rez = .0f;
+    }
+    <table class="table table-striped">
+        <thead class="thead bg-light">
+        <th scope="col">№</th>
+        <th scope="col">Код</th>
+        <th scope="col">Повна назва товару</th>
+        <th scope="col">Опис</th>
+        <th scope="col">К-ть</th>
+        <th scope="col">Ціна</th>
+        <th scope="col">Сума</th>
         <tbody>
             @foreach (var item in Model)
             {
-                var rez = item.Count * item.Goods.Price;
-                <tr>
-                    <th scope="row">#</th>
-                    <td>@item.Goods.ProductCode</td>
-                    <td>@item.Goods.FullName</td>
-                    <td>@item.Orders.Description</td>
-                    <td>@item.Count</td>
-                    <td>@item.Goods.Price</td>
-                    <td>@rez</td>
-                </tr> 
+                rez = item.Count * item.Goods.Price;
+
+
+                if (item.FormatId != format)
+                {
+                    format = item.FormatId;
+                    <th scope="col">@item.Formats.Format</th>
+                    
+}
+                    <tr >
+                        <th scope="row">#</th>
+                        <td>@Html.DisplayFor(x => item.Goods.ProductCode)</td>
+                        <td>@Html.DisplayFor(x => item.Goods.FullName)</td>
+                        <td>@Html.DisplayFor(x => item.Orders.Description)</td>
+                        <td>@Html.DisplayFor(x => item.Count)</td>
+                        <td>@Html.DisplayFor(x => item.Goods.Price)</td>
+                        <td>@rez</td>
+                    </tr>
             }
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>

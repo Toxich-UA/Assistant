@@ -10,6 +10,23 @@ namespace Assistant.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Customers",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int(11)", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    adress = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    firstName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    lastName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    phoneNumber = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Customers", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Formats",
                 columns: table => new
                 {
@@ -43,7 +60,7 @@ namespace Assistant.Migrations
                 {
                     id = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    customer = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    customerId = table.Column<int>(type: "int(11)", nullable: false),
                     description = table.Column<string>(type: "varchar(1000)", maxLength: 1000, nullable: true),
                     invoice = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
                     orderPrice = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true)
@@ -51,6 +68,12 @@ namespace Assistant.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.id);
+                    table.ForeignKey(
+                        name: "customerId",
+                        column: x => x.id,
+                        principalTable: "Customers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -101,6 +124,11 @@ namespace Assistant.Migrations
                 name: "orderId_idx",
                 table: "OrderGoods",
                 column: "orderId");
+
+            migrationBuilder.CreateIndex(
+                name: "customerId_idx",
+                table: "Orders",
+                column: "customerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -116,6 +144,9 @@ namespace Assistant.Migrations
 
             migrationBuilder.DropTable(
                 name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Customers");
         }
     }
 }

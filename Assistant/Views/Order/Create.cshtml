@@ -1,1 +1,41 @@
-﻿
+﻿@using System.Collections
+@model Orders
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+
+<h4>Orders</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @* Used html helper methods because JQuery validation works fine. *@
+        @using (Html.BeginForm("Create", "Order", "post"))
+        {
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.CustomerId, "CustomerId", new {@class = "control-label"})
+                @Html.DropDownListFor(m => m.CustomerId, ViewData["Customers"] as IEnumerable<SelectListItem>, new {@class = "form-control"})
+
+                @Html.ValidationMessageFor(m => m.CustomerId, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, "Description", new {@class = "control-label"})
+                @Html.TextBoxFor(m => m.Description, "Description", new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Description, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default"/>
+            </div>
+
+        }
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

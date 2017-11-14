@@ -7,43 +7,44 @@
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="container">
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-            <div class="container">
-                <a href="/" class="navbar-brand">
-                    <h2>
-                        Uvarov
-                    </h2>
-                </a>
-                <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="mainNav">
-                    <div class="navbar-nav mr-auto">
-                        <a class="nav-item nav-link active" href="order/create">Create</a>
-                        <a class="nav-item nav-link" href="home/About">About</a>
-                    </div>
-                    <a class="nav-item text-muted ml-auto" href="#">Logout</a>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container">
+            <a href="/" class="navbar-brand">
+                <h2>
+                    Uvarov
+                </h2>
+            </a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <div class="navbar-nav mr-auto">
+                    @*<a class="nav-item nav-link active" href="order/create">Create</a>*@
+                    @*Gerate <a> tag*@
+                    @Html.ActionLink("Create", "Create", "Order", null, new { @class = "nav-item nav-link" } )
+                    @Html.ActionLink("About", "About", "home", null, new { @class = "nav-item nav-link" })
+                    
                 </div>
-
+                <a class="nav-item text-muted ml-auto" href="#">Logout</a>
             </div>
 
-        </nav>
-
-        <div class="content">
-            <!-- Cards START -->
-            
-                @RenderBody()    
-               
-            <!-- Cards END -->
-        </div>  
-        <div class="footer">
-            &copy; 2017-Toxich_UA
         </div>
+
+    </nav>
+
+    <div class="content">
+            
+        @RenderBody()    
+               
+    </div>  
+    <div class="blockquote-footer">
+        &copy; 2017-Toxich_UA
     </div>
+</div>
 </body>
 </html>
-<script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="~/lib/popper.js/dist/popper.js"></script>
-<script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 <!-- <script type="text/javascript" src="test.js"></script> -->

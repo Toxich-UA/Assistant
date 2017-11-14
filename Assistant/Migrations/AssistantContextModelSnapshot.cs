@@ -20,6 +20,44 @@ namespace Assistant.Migrations
                 .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452");
 
+            modelBuilder.Entity("Assistant.Entity.Customers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int(11)")
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnName("adress")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnName("Email")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnName("firstName")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnName("lastName")
+                        .HasMaxLength(20);
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnName("phoneNumber")
+                        .HasMaxLength(20);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("Assistant.Models.Formats", b =>
                 {
                     b.Property<int>("Id")
@@ -107,9 +145,9 @@ namespace Assistant.Migrations
                         .HasColumnType("int(11)")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Customer")
-                        .HasColumnName("customer")
-                        .HasMaxLength(45);
+                    b.Property<int>("CustomerId")
+                        .HasColumnName("customerId")
+                        .HasColumnType("int(11)");
 
                     b.Property<string>("Description")
                         .HasColumnName("description")
@@ -124,6 +162,9 @@ namespace Assistant.Migrations
                         .HasMaxLength(45);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId")
+                        .HasName("customerId_idx");
 
                     b.ToTable("Orders");
                 });
@@ -145,6 +186,15 @@ namespace Assistant.Migrations
                         .WithMany("OrderGoods")
                         .HasForeignKey("OrderId")
                         .HasConstraintName("orderId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Assistant.Models.Orders", b =>
+                {
+                    b.HasOne("Assistant.Entity.Customers", "Customers")
+                        .WithMany("Orders")
+                        .HasForeignKey("Id")
+                        .HasConstraintName("customerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

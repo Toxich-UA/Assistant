@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Assistant.Entity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -10,7 +11,8 @@ namespace Assistant.Models
         public virtual DbSet<Goods> Goods { get; set; }
         public virtual DbSet<OrderGoods> OrderGoods { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
-        public virtual DbSet<Orders> Formars { get; set; }
+        public virtual DbSet<Formats> Formars { get; set; }
+        public virtual DbSet<Customers> Customers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -122,7 +124,7 @@ namespace Assistant.Models
 					.HasForeignKey(d => d.FormatId)
 					.HasConstraintName("formats");
 			});
-
+			//Order Table
             modelBuilder.Entity<Orders>(entity =>
             {
 	            entity.Property(e => e.Id)
@@ -130,9 +132,9 @@ namespace Assistant.Models
 		            .ValueGeneratedOnAdd()
 		            .HasColumnType("int(11)");
 
-				entity.Property(e => e.Customer)
-                    .HasColumnName("customer")
-                    .HasMaxLength(45);
+				entity.Property(e => e.CustomerId)
+                    .HasColumnName("customerId")
+                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
@@ -145,7 +147,43 @@ namespace Assistant.Models
                 entity.Property(e => e.OrderPrice)
                     .HasColumnName("orderPrice")
                     .HasMaxLength(45);
+
+				entity.HasIndex(e => e.CustomerId)
+					.HasName("customerId_idx");
+
+	            entity.HasOne(d => d.Customers)
+		            .WithMany(p => p.Orders)
+		            .HasForeignKey(d => d.Id)
+		            .HasConstraintName("customerId");
             });
-        }
+			//Customer Table
+			modelBuilder.Entity<Customers>(entity =>
+			{
+				entity.Property(e => e.Id)
+					.HasColumnName("id")
+					.ValueGeneratedOnAdd()
+					.HasColumnType("int(11)");
+
+				entity.Property(e => e.FirstName)
+					.HasColumnName("firstName")
+					.HasMaxLength(20);
+
+				entity.Property(e => e.LastName)
+					.HasColumnName("lastName")
+					.HasMaxLength(20);
+
+				entity.Property(e => e.Address)
+					.HasColumnName("adress")
+					.HasMaxLength(100);
+
+				entity.Property(e => e.PhoneNumber)
+					.HasColumnName("phoneNumber")
+					.HasMaxLength(20);
+
+				entity.Property(e => e.Email)
+					.HasColumnName("Email")
+					.HasMaxLength(20);
+			});
+		}
     }
 }

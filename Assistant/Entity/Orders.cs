@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Assistant.Entity;
 
 namespace Assistant.Models
 {
@@ -15,13 +18,25 @@ namespace Assistant.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 
-        public string Customer { get; set; }
+		[Required]
+		[DisplayName("Customer ID")]
+		
+		public int CustomerId { get; set; }
 
-        public string Description { get; set; }
+		
+		//[Required]
+		[DisplayName("Description")]
+		public string Description { get; set; }
 
-        public string OrderPrice { get; set; }
+		//[Required]
+		[DisplayName("Order price")]
+		public string OrderPrice { get; set; }
 
-        public string Invoice { get; set; }
+		//[Required]
+		public string Invoice { get; set; }
+
+
+		public Customers Customers { get; set; }
 
 		public ICollection<OrderGoods> OrderGoods { get; set; }
 

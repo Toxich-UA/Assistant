@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Assistant.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assistant.Controllers
 {
@@ -12,7 +13,7 @@ namespace Assistant.Controllers
 		{
 
 			//var order = (from r in db.Orders select r);
-			var order = db.Orders;
+			var order = db.Orders.Include(d => d.Customers);
             return View(order);
         }
 

@@ -22,15 +22,15 @@
     "bower_components",
     "tests"
   ],
-  "version": "1.12.6",
-  "_release": "1.12.6",
+  "version": "1.12.7",
+  "_release": "1.12.7",
   "_resolution": {
     "type": "version",
-    "tag": "v1.12.6",
-    "commit": "ef87c99e389a304fa00e85d6372bf8cb596b9de8"
+    "tag": "v1.12.7",
+    "commit": "59fca4408b85bdf6f571e6983fd7df4af5f1625a"
   },
   "_source": "https://github.com/FezVrasta/popper.js.git",
-  "_target": "v1.12.6",
+  "_target": "v1.12.7",
   "_originalSource": "popper.js",
   "_direct": true
 }

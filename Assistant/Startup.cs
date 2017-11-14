@@ -26,10 +26,10 @@ namespace Assistant
         public void ConfigureServices(IServiceCollection services)
         {
 	        services.AddApplicationInsightsTelemetry(Configuration);
-            services.AddMvc();
+	        services.AddMvc();
 
-			//	        services.AddSingleton<IConfiguration>(Configuration);
-		}
+	        //	        services.AddSingleton<IConfiguration>(Configuration);
+        }
 
 
 
