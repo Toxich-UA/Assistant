@@ -15,6 +15,8 @@ namespace Assistant.Models
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
 		public string Format { get; set; }
+	    public string Type { get; set; }
+	    public float? Price { get; set; }
 
 
 		public ICollection<OrderGoods> OrderGoods { get; set; }

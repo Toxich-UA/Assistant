@@ -8,11 +8,22 @@
 
 </div>
 <div class="customer">
+    @foreach (var item in Model)
+    {
+        <td>Имя: </td><td>@item.Orders.Customers.FirstName</td><br/>
+        <td>Фамилия: </td><td>@item.Orders.Customers.LastName</td><br />
+        <td>Адрес: </td><td>@item.Orders.Customers.Address</td><br />
+        <td>Номер телефона: </td><td>@item.Orders.Customers.PhoneNumber</td>
 
+
+        break;
+    }
+    
 </div>
 <div>
     @{var format = 0;
         float? rez = .0f;
+        Model.GetEnumerator().Reset();
     }
     <table class="table table-striped">
         <thead class="thead bg-light">
@@ -26,7 +37,7 @@
         <tbody>
             @foreach (var item in Model)
             {
-                rez = item.Count * item.Goods.Price;
+                rez = item.Count * item.Formats.Price;
 
 
                 if (item.FormatId != format)
@@ -37,14 +48,15 @@
 }
                     <tr >
                         <th scope="row">#</th>
-                        <td>@Html.DisplayFor(x => item.Goods.ProductCode)</td>
-                        <td>@Html.DisplayFor(x => item.Goods.FullName)</td>
-                        <td>@Html.DisplayFor(x => item.Orders.Description)</td>
-                        <td>@Html.DisplayFor(x => item.Count)</td>
-                        <td>@Html.DisplayFor(x => item.Goods.Price)</td>
+                        <td><dt>@item.Goods.ProductCode</dt></td>
+                        <td>@item.Formats.Type (@item.Goods.Category)</td>
+                        <td>Размер @item.Formats.Format</td>
+                        <td><dt>@item.Count</dt></td>
+                        <td>@item.Formats.Price</td>
                         <td>@rez</td>
                     </tr>
             }
             </tbody>
         </table>
     </div>
+

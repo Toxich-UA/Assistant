@@ -20,12 +20,12 @@ namespace Assistant.Models
 
 		[Required]
 		[DisplayName("Customer ID")]
-		
 		public int CustomerId { get; set; }
 
 		
 		//[Required]
 		[DisplayName("Description")]
+		//[RegularExpression(@"[a-zA-Z]+|[0-9]+|[а-яА-я]+", ErrorMessage = "")]
 		public string Description { get; set; }
 
 		//[Required]

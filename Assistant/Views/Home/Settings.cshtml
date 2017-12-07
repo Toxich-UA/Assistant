@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+   
+    
+    @Html.ActionLink("Edit Goods", "List", "Goods", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit Formats", "Index", "Formats", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit Customers", "Index", "Customers", null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Edit Order", "List", "Order", null, new { @class = "btn btn-primary" })
+   
+</div>

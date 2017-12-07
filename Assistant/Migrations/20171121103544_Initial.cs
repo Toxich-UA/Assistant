@@ -32,7 +32,9 @@ namespace Assistant.Migrations
                 {
                     id = table.Column<int>(type: "int(11)", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    format = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
+                    format = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    price = table.Column<float>(type: "float", nullable: true),
+                    type = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,10 +46,8 @@ namespace Assistant.Migrations
                 columns: table => new
                 {
                     productCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    fullName = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
-                    price = table.Column<float>(type: "float", nullable: true),
-                    retailPrice = table.Column<float>(type: "float", nullable: true),
-                    wholesalePrice = table.Column<float>(type: "float", nullable: true)
+                    category = table.Column<string>(type: "varchar(45)", maxLength: 45, nullable: true),
+                    imgSrc = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {

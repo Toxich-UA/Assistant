@@ -1,8 +1,11 @@
 ﻿using System.IO;
+using Assistant.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ReflectionIT.Mvc.Paging;
 
 
 namespace Assistant
@@ -27,8 +30,12 @@ namespace Assistant
         {
 	        services.AddApplicationInsightsTelemetry(Configuration);
 	        services.AddMvc();
-
-	        //	        services.AddSingleton<IConfiguration>(Configuration);
+	        services.AddDbContext<AssistantContext>(options => options.UseMySql(Configuration.GetConnectionString("LocalHost")));
+			services.AddPaging(options => {
+				options.ViewName = "Bootstrap4";
+				options.HtmlIndicatorDown = " <span>&darr;</span>";
+				options.HtmlIndicatorUp = " <span>&uarr;</span>";
+			});
         }
 
 

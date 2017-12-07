@@ -1,18 +1,52 @@
-﻿@model Goods
+﻿@model PagingList<Goods>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
 
-    <dl>
-        <dt><b>ProductCode:</b></dt>
-        <dd>@Model.ProductCode</dd>
-    </dl>
-    <dl>
-        <dt><b>FullName:</b></dt>
-        <dd>@Model.FullName</dd>
-    </dl>
-    <dl>
-        <dt><b>Price:</b></dt>
-        <dd>@Model.Price</dd>
-    </dl>
-    <dl>
-        <dt><b>RetailPrice:</b></dt>
-        <dd>@Model.RetailPrice</dd>
-    </dl>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div>
+    <form method="get" class="form-inline">
+        <input name="filter" class="form-control" placeholder="filter"
+               value="@Model.RouteValue["Filter"]" />
+        <button type="submit" class="btn btn-info">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+        </button>
+    </form>
+</div>
+<div>
+    <nav aria-label="Goods">
+        @await Component.InvokeAsync("Pager", new { pagingList = Model })
+    </nav>
+
+    <div class="row text-center">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card">
+                    <img class="card-img-top" src="~/Data/Images/@item.ImgSrc" alt="">
+                    <div class="card-body">
+                        <h4 class="card-title">@item.ProductCode</h4>
+
+                    </div>
+                    <div class="card-footer">
+                        <form action="" class="form" data-form>
+                            <div class="form-group">
+                                <input type="number" min="1" value="1" class="form-control" name="quantity" data-attribute placeholder="Quantity">
+                            </div>
+                            <div class="form-group">
+                                @Html.DropDownList("FormatId", ViewData["Formats"] as SelectList, new { @class = "form-control" })
+                            </div>
+                            <input type="hidden" value="@item.ProductCode" name="product_name" data-attribute="">
+                            <input type="submit" class="btn btn-primary" value="Add to Cart" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<nav aria-label="Products navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>

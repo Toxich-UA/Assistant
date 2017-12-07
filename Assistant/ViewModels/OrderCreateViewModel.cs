@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Assistant.ViewModels
 {
-    public class OrderIndexViewModel
+    public class OrderCreateViewModel
     {
 	    
 	    public string Id { get; set; }

@@ -3,48 +3,57 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="~/css/style.css">
-    <link rel="stylesheet" href="~/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
+    
     <title>@ViewBag.Title</title>
 </head>
 <body>
-<div class="container">
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <div class="container">
-            <a href="/" class="navbar-brand">
-                <h2>
-                    Uvarov
-                </h2>
-            </a>
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <div class="navbar-nav mr-auto">
-                    @*<a class="nav-item nav-link active" href="order/create">Create</a>*@
-                    @*Gerate <a> tag*@
-                    @Html.ActionLink("Create", "Create", "Order", null, new { @class = "nav-item nav-link" } )
-                    @Html.ActionLink("About", "About", "home", null, new { @class = "nav-item nav-link" })
-                    
+    <div class="container">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+            <div class="container">
+                <a href="/" class="navbar-brand">
+                    <h2>
+                        Uvarov
+                    </h2>
+                </a>
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#mainNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <div class="navbar-nav mr-auto">
+                        @*<a class="nav-item nav-link active" href="order/create">Create</a>*@
+                        @*Gerate <a> tag*@
+                        @Html.ActionLink("Create", "Create", "Order", null, new { @class = "nav-item nav-link" })
+                        @Html.ActionLink("Settings", "Settings", "Home", null, new { @class = "nav-item nav-link" })
+                        @Html.ActionLink("About", "About", "home", null, new { @class = "nav-item nav-link" })
+
+                    </div>
+                    <a href="#" id="cart" class="text-light">
+                        <i class="fa fa-shopping-cart fa-2x"></i>
+                        <span class="badge badge-primary" id="badge"></span>
+                    </a>
                 </div>
-                <a class="nav-item text-muted ml-auto" href="#">Logout</a>
+
             </div>
 
+        </nav>
+
+        <div class="content">
+
+            @RenderBody()
+
         </div>
-
-    </nav>
-
-    <div class="content">
-            
-        @RenderBody()    
-               
-    </div>  
-    <div class="blockquote-footer">
-        &copy; 2017-Toxich_UA
+        <div class="blockquote-footer">
+            &copy; 2017-Toxich_UA
+        </div>
     </div>
-</div>
 </body>
 </html>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<script src="~/lib/popper.js/dist/popper.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/js/cart.js"></script>
 <!-- <script type="text/javascript" src="test.js"></script> -->

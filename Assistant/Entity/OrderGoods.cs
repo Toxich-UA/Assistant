@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Assistant.Models
@@ -8,11 +9,18 @@ namespace Assistant.Models
     {
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
+
+		[Required]
 		public int Count { get; set; }
 
-        public int OrderId { get; set; }
-        public string GoodsId { get; set; }
-        public int FormatId { get; set; }
+
+		public int OrderId { get; set; }
+
+
+		public string GoodsId { get; set; }
+
+
+		public int FormatId { get; set; }
 
 
         public Goods Goods { get; set; }

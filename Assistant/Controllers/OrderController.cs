@@ -2,52 +2,66 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Assistant.Entity;
 using Assistant.Models;
 using Assistant.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using ReflectionIT.Mvc.Paging;
+
 
 namespace Assistant.Controllers
 {
     public class OrderController : Controller
     {
-		private AssistantContext db = new AssistantContext();
+		private AssistantContext _context;
 
+	    public OrderController(AssistantContext context)
+	    {
+		    _context = context;
+	    }
 
-
+		
 		// GET: /<controller>/
-		public IActionResult Index(int orderId)
+		public IActionResult Index(int? orderId)
 		{
-			
-			var ordersGoods = db.OrderGoods
+			if (orderId == null)
+			{
+				return NotFound();
+			}
+
+			var ordersGoods = _context.OrderGoods
 								.Include(id => id.Goods)
 								.Include(id => id.Orders)
 								.Include(id => id.Formats)
+								.Include(id => id.Orders.Customers)
 								.Where(id => id.OrderId == orderId)
 								.OrderBy(id => id.FormatId).ToList();
 
 			ViewBag.Format = ordersGoods[0].FormatId;
 			
+			
 
 			return View(ordersGoods);
         }
+
+	    public IActionResult List()
+	    {
+		    var orders = _context.Orders;
+		    return View(orders);
+	    }
 
 
 	    public IActionResult Create()
 	    {
 
 			//Create DropDownList from database table
-		    List<OrderIndexViewModel> custom = new List<OrderIndexViewModel>{};
+		    List<OrderCreateViewModel> custom = new List<OrderCreateViewModel>{};
 
-		    var rez = db.Customers;
+		    var rez = _context.Customers;
 		    foreach (var item in rez)
 		    {
-			    custom.Add(new OrderIndexViewModel { Id = item.Id.ToString(), FirstName = item.FirstName});
+			    custom.Add(new OrderCreateViewModel { Id = item.Id.ToString(), FirstName = item.FirstName+" "+item.LastName});
 		    }
 			
 			ViewData["Customers"] = new SelectList(custom.AsEnumerable(), "Id", "FirstName");
@@ -67,10 +81,23 @@ namespace Assistant.Controllers
 			    Console.WriteLine("DEBUG: \nCustomer: " + customer + "\nDescription: " + description + "\nOrderPrice: " +
 			                      orderPrice + "\nInvoice: " + invoice);
 			    Console.WriteLine(TryValidateModel(order));
-
-				return RedirectToAction("Index", "Home");
+				//_context.Add(order);
+				
+				return RedirectToAction("Index", "Goods");
 			}
 			return RedirectToAction("Create");
 		}
+		
+		public IActionResult Edit()
+		{
+			return View();
+		}
+
+		public IActionResult Delete()
+		{
+			return View();
+		}
+
+
 	}
 }

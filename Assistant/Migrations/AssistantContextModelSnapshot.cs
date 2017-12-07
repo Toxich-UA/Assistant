@@ -70,6 +70,13 @@ namespace Assistant.Migrations
                         .HasColumnName("format")
                         .HasMaxLength(20);
 
+                    b.Property<float?>("Price")
+                        .HasColumnName("price");
+
+                    b.Property<string>("Type")
+                        .HasColumnName("type")
+                        .HasMaxLength(20);
+
                     b.HasKey("Id");
 
                     b.ToTable("Formats");
@@ -81,18 +88,12 @@ namespace Assistant.Migrations
                         .HasColumnName("productCode")
                         .HasMaxLength(20);
 
-                    b.Property<string>("FullName")
-                        .HasColumnName("fullName")
+                    b.Property<string>("Category")
+                        .HasColumnName("category")
                         .HasMaxLength(45);
 
-                    b.Property<float?>("Price")
-                        .HasColumnName("price");
-
-                    b.Property<float?>("RetailPrice")
-                        .HasColumnName("retailPrice");
-
-                    b.Property<float?>("WholesalePrice")
-                        .HasColumnName("wholesalePrice");
+                    b.Property<string>("ImgSrc")
+                        .HasColumnName("imgSrc");
 
                     b.HasKey("ProductCode");
 

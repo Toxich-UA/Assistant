@@ -12,10 +12,8 @@ namespace Assistant.Models
         }
 
         public string ProductCode { get; set; }
-        public string FullName { get; set; }
-        public float? Price { get; set; }
-        public float? RetailPrice { get; set; }
-        public float? WholesalePrice { get; set; }
+        public string Category { get; set; }
+	    public string ImgSrc { get; set; }
 
         public ICollection<OrderGoods> OrderGoods { get; set; }
 

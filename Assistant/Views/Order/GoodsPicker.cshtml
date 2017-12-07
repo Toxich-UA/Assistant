@@ -1,0 +1,24 @@
+﻿@model ReflectionIT.Mvc.Paging.PagingList<Goods>
+@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+@{
+    ViewData["Title"] = "Goods Picker";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Suppliers</h2>
+
+<nav aria-label="Suppliers navigation example">
+    @await Component.InvokeAsync("Pager", new { pagingList = Model })
+</nav>
+
+
+<table class="table table-striped">
+    
+</table>
+
+<nav aria-label="Suppliers navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>
+

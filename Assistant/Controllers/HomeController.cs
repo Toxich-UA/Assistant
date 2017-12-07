@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Assistant.Models;
+﻿using Assistant.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,13 +6,16 @@ namespace Assistant.Controllers
 {
     public class HomeController : Controller
     {
-		private AssistantContext db = new AssistantContext();
+		private AssistantContext _context;
 
-		public IActionResult Index()
+	    public HomeController(AssistantContext context)
+	    {
+		    _context = context;
+	    }
+
+	    public IActionResult Index()
 		{
-
-			//var order = (from r in db.Orders select r);
-			var order = db.Orders.Include(d => d.Customers);
+			var order = _context.Orders.Include(d => d.Customers);
             return View(order);
         }
 
@@ -23,16 +25,13 @@ namespace Assistant.Controllers
 
             return View();
         }
-		//        public IActionResult Contact()
-		//        {
-		//            ViewData["Message"] = "Your contact page.";
-		//
-		//            return View();
-		//        }
-		//
-		//        public IActionResult Error()
-		//        {
-		//            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		//        }
+
+		public IActionResult Settings()
+        {
+            
+
+            return View();
+        }
+		
 	}
 }

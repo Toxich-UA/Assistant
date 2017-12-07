@@ -8,7 +8,11 @@ namespace Assistant.Models
 {
     public partial class AssistantContext : DbContext
     {
-        public virtual DbSet<Goods> Goods { get; set; }
+	    public AssistantContext(DbContextOptions<AssistantContext> options ) : base(options)
+	    {
+	    }
+
+	    public virtual DbSet<Goods> Goods { get; set; }
         public virtual DbSet<OrderGoods> OrderGoods { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Formats> Formars { get; set; }
@@ -16,10 +20,6 @@ namespace Assistant.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySql("Server = localhost; User Id = root; Password = 4952; Database = Assistant; CharSet=utf8");
-            }
 			optionsBuilder.UseLoggerFactory(new LoggerFactory(new[]
 			{
 				new ConsoleLoggerProvider((category, level)
@@ -42,18 +42,12 @@ namespace Assistant.Models
                     .HasMaxLength(20)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.FullName)
-                    .HasColumnName("fullName")
+                entity.Property(e => e.Category)
+                    .HasColumnName("category")
                     .HasMaxLength(45);
 
-                entity.Property(e => e.Price)
-					.HasColumnName("price");
-
-                entity.Property(e => e.RetailPrice)
-					.HasColumnName("retailPrice");
-
-                entity.Property(e => e.WholesalePrice)
-					.HasColumnName("wholesalePrice");
+                entity.Property(e => e.ImgSrc)
+					.HasColumnName("imgSrc");
             });
 			//Formats Table
 			modelBuilder.Entity<Formats>(entity =>
@@ -70,6 +64,13 @@ namespace Assistant.Models
 				entity.Property(e => e.Format)
 					.HasColumnName("format")
 					.HasMaxLength(20);
+
+				entity.Property(e => e.Type)
+					.HasColumnName("type")
+					.HasMaxLength(20);
+
+				entity.Property(e => e.Price)
+					.HasColumnName("price");
 			});
 			//OrderGoods Table
 			modelBuilder.Entity<OrderGoods>(entity =>

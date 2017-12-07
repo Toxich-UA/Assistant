@@ -1,5 +1,9 @@
 ﻿@model IQueryable<Orders>
 
+@{
+    ViewData["Title"] = "Home";
+}    
+
 <div class="row">
     @foreach (var item in Model)
     {
@@ -9,7 +13,8 @@
                 <div class="card-body">
                     <h4 class="card-title">@item.Customers.FirstName</h4>
                     <p class="card-text">@item.Description</p>
-                    <a href="order?orderId=@item.Id" class="btn btn-primary">View order</a>
+@*                    <a href="order?orderId=@item.Id" class="btn btn-primary">View order</a>*@
+                    @Html.ActionLink("View order", "Index", "Order", new {@orderId = @item.Id}, new{@class = "btn btn-primary" })
                 </div>
             </div>
         </div>
